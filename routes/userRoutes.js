@@ -1,9 +1,10 @@
+import authMiddleware from "../middlewares/authMiddleware.js";
 import express from "express";
-import { registerUser } from "../controllers/userController.js";
+import { registerUser, userLogin } from "../controllers/userController.js";
 
 const router = express.Router();
 
-/// Route for registration
+router.post("/login", authMiddleware, userLogin);
 router.post("/register", registerUser);
 
 export default router;

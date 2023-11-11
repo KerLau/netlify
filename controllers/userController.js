@@ -1,7 +1,16 @@
+import generateToken from "../utils/generateToken.js";
 import bcrypt from "bcrypt";
 import User from "../models/userModel.js";
 
-// Register User Endpoint
+const userLogin = async (req, res, next) => {
+  const { user } = req;
+
+  res.json({
+    _id: user._id,
+    email: user.email,
+    token: generateToken(user._id),
+  });
+};
 
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -32,4 +41,4 @@ const registerUser = async (req, res) => {
     email: user.email,
   });
 };
-export { registerUser };
+export { registerUser, userLogin };
