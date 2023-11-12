@@ -77,3 +77,4 @@ const listUser = async (req, res) => {
 };
 
 export { registerUser, userLogin, listUser,updatedUser };
+

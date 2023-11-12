@@ -2,21 +2,24 @@ import express from "express";
 import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import connectDB from "./config/db.js";
 import cors from "cors";
+//import connectDB from "./config/db.js";
 import User from "./models/userModel.js";
 import userRoutes from "./routes/userRoutes.js";
 
-
 dotenv.config();
-app.use(cors());
+//connectDB();
 
 const app = express();
 const port = process.env.PORT || 6969;
 
-connectDB();
 
-app.use(express.json());
+
+
+
+app.use(cors()); 
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true })); 
 
 
 const verifyToken = (req, res, next) => {
@@ -34,7 +37,11 @@ const verifyToken = (req, res, next) => {
   });
 };
 
-app.put("/user/:id", cors(), verifyToken, async (req, res) => {
+
+app.use("/api/users", userRoutes);
+
+
+app.put("/user/:id", verifyToken, async (req, res) => {
   try {
     const { name, email, password } = req.body;
     const hashedPassword = bcrypt.hashSync(password, 8);
@@ -54,10 +61,7 @@ app.put("/user/:id", cors(), verifyToken, async (req, res) => {
   }
 });
 
-app.use(express.urlencoded({ extended: true }));
 
 app.listen(port, () => {
-  console.log(`Server started and running on port : ${port}`);
+  console.log(`Server started and running on port: ${port}`);
 });
-
-app.use("/api/users", userRoutes);
