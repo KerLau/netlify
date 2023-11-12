@@ -1,9 +1,13 @@
-import { Router } from "express";
+import authMiddleware from "../middlewares/authMiddleware.js";
+import express from "express";
+import { registerUser, userLogin } from "../controllers/userController.js";
 import User from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 
-const router = Router();
+const router = express.Router();
 
+router.post("/login", authMiddleware, userLogin);
+router.post("/register", registerUser);
 router.get("/users", (req, res) => { 
     const token = req.header("Authorization");
     try {
