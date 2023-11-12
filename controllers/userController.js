@@ -1,6 +1,7 @@
 import generateToken from "../utils/generateToken.js";
 import bcrypt from "bcrypt";
 import User from "../models/userModel.js";
+import jwt from "jsonwebtoken"
 
 const userLogin = async (req, res, next) => {
   const { user } = req;
@@ -41,4 +42,20 @@ const registerUser = async (req, res) => {
     email: user.email,
   });
 };
-export { registerUser, userLogin };
+
+const listUser = async (req, res) => {
+  const token = req.header("Authorization");
+
+    try {
+        jwt.verify(token, process.env.SECRET_KEY)
+    } catch(err){ 
+        return res.status(401).send("The token is not valid!")
+    }
+
+    User.find().then((arr)=> {
+        return res.send(arr)
+    })
+};
+  
+
+export { registerUser, userLogin, listUser};
