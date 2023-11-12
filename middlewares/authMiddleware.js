@@ -1,5 +1,25 @@
+
 import jwt from "jsonwebtoken";
 
+import User from "../models/userModel.js";
+import matchPassword from "../utils/matchPassword.js";
+
+const authMiddleware = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).send("Parameters missing in the body");
+  }
+
+  const user = await User.findOne({ email });
+
+  if (user && (await matchPassword(password, user))) {
+    req.user = user;
+    next();
+  } else {
+    return res.status(400).send("There was a problem with your data!!!");
+  }
+};
 const verifyToken = (req, res, next) => {
   const bearerHeader = req.headers["authorization"];
   if (typeof bearerHeader !== "undefined") {
@@ -19,4 +39,6 @@ const verifyToken = (req, res, next) => {
     res.status(403).json({ message: "Authorization token is required" });
   }
 };
-export default verifyToken;
+export default {verifyToken,authMiddleware}
+
+

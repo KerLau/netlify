@@ -5,6 +5,8 @@ import jwt from "jsonwebtoken";
 import connectDB from "./config/db.js";
 import cors from "cors";
 import User from "./models/User.js";
+import userRoutes from "./routes/userRoutes.js";
+
 
 dotenv.config();
 app.use(cors());
@@ -15,6 +17,7 @@ const port = process.env.PORT || 6969;
 connectDB();
 
 app.use(express.json());
+
 
 const verifyToken = (req, res, next) => {
   const token = req.headers["authorization"];
@@ -51,6 +54,10 @@ app.put("/user/:id", cors(), verifyToken, async (req, res) => {
   }
 });
 
+app.use(express.urlencoded({ extended: true }));
+
 app.listen(port, () => {
   console.log(`Server started and running on port : ${port}`);
 });
+
+app.use("/api/users", userRoutes);

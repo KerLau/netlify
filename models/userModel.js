@@ -4,24 +4,20 @@ const userSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, "The first name is required"],
     },
     email: {
       type: String,
-      required: true,
+      required: [true, "Email address is required"],
       unique: true,
     },
     password: {
       type: String,
-      required: true,
+      required: [true, "Password is required"],
+      minLength: 4,
     },
   },
-  {
-    timestamps: {
-      createdAt: "created_at",
-      updatedAt: "updated_at",
-    },
-  }
+  { timestamps: true }
 );
 
 const User = mongoose.model("User", userSchema);
