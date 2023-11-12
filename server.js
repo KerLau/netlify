@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import connectDB from "./config/db.js";
 import cors from "cors";
-import User from "./models/User.js";
+import User from "./models/userModel.js";
 import userRoutes from "./routes/userRoutes.js";
 
 
