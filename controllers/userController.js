@@ -57,26 +57,4 @@ const listUser = async (req, res) => {
   });
 };
 
-// const updatedUser = async (req, res) => {
-//   try {
-//     const { name, email, password } = req.body;
-//     const hashedPassword = bcrypt.hashSync(password, 8);
-//     const updatedUser = await User.findByIdAndUpdate(
-//       req.params.id,
-//       { name, email, password: hashedPassword },
-//       { new: true }
-//     ).select("-password");
-
-//     if (!updatedUser) {
-//       return res.status(404).send({ error: "User not found" });
-//     }
-
-//     res.send(updatedUser);
-//   } catch (error) {
-//     res.status(500).send({ error: "Internal server error" });
-//   }
-// }
-
 export { registerUser, userLogin, listUser };
-
-// updatedUser
