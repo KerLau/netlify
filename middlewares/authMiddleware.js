@@ -20,23 +20,23 @@ export const authMiddleware = async (req, res, next) => {
   }
 };
 
-export const verifyToken = (req, res, next) => {
-  const bearerHeader = req.headers["authorization"];
-  if (typeof bearerHeader !== "undefined") {
-    const bearer = bearerHeader.split(" ");
-    const bearerToken = bearer[1]; // This is your actual token
+// export const verifyToken = (req, res, next) => {
+//   const bearerHeader = req.headers["authorization"];
+//   if (typeof bearerHeader !== "undefined") {
+//     const bearer = bearerHeader.split(" ");
+//     const bearerToken = bearer[1]; // This is your actual token
 
-    jwt.verify(bearerToken, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) {
-        return res
-          .status(403)
-          .json({ message: "Failed to authenticate token." });
-      } else {
-        req.decoded = decoded;
-        next();
-      }
-    });
-  } else {
-    res.status(403).json({ message: "Authorization token is required" });
-  }
-};
+//     jwt.verify(bearerToken, process.env.JWT_SECRET, (err, decoded) => {
+//       if (err) {
+//         return res
+//           .status(403)
+//           .json({ message: "Failed to authenticate token." });
+//       } else {
+//         req.decoded = decoded;
+//         next();
+//       }
+//     });
+//   } else {
+//     res.status(403).json({ message: "Authorization token is required" });
+//   }
+// };
